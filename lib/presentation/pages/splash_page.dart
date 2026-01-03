@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
             Image.asset("lib/images/mon_budget.png"),
             CircularProgressIndicator(),
             SizedBox(height: 40),
-            Text("Developer by LeloEduk"),
+            Text("Developer by LeloEduk "),
           ],
         ),
       ),

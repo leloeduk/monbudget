@@ -27,8 +27,8 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: Column(
                     children: [
-                      Text("Total des dépense "),
-                      Text("${state.total.toStringAsFixed(0)}  FCFA"),
+                      Text("Total des dépenses "),
+                      Text("${state.total.toStringAsFixed(0)} FCFA"),
                     ],
                   ),
                 ),
