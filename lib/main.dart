@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:monbudget/data/expense_repository_impl.dart';
 import 'package:monbudget/presentation/bloc/expense_bloc.dart';
 import 'package:monbudget/presentation/bloc/expense_event.dart';
@@ -10,6 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   final box = await Hive.openBox("expenses");
+  MobileAds.instance.initialize();
   runApp(MyApp(box));
 }
 
@@ -17,7 +19,6 @@ class MyApp extends StatelessWidget {
   final Box box;
   const MyApp(this.box, {super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
