@@ -5,4 +5,10 @@ abstract class ExpenseRepos {
   void addExpense(Expense expense);
   void deleteExpense(int index);
   double getTotal();
+
+  List<Expense> getExpensesInRange(DateTime start, DateTime end);
+  Map<ExpenseCategory, double> getTotalsByCategory({
+    DateTime? start,
+    DateTime? end,
+  });
 }
