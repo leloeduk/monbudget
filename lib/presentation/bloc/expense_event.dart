@@ -31,6 +31,6 @@ class LoadAnalyticsEvent extends ExpenseEvent {
 }
 
 class FilterByPeriodEvent extends ExpenseEvent {
-  final String period; // 'day'|'week'|'month'|'year'
+  final String period;    // 'day'|'week'|'month'|'year'
   FilterByPeriodEvent(this.period);
 }
