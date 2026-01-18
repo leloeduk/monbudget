@@ -3,6 +3,7 @@
         android:label="monbudget"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3010995346645294~9532898099"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

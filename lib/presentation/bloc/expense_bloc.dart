@@ -1,6 +1,8 @@
+// lib/presentation/bloc/expense_bloc.dart (mise à jour)
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monbudget/domain/entities/expense.dart';
 import 'package:monbudget/domain/repositories/expense_repos.dart';
+import 'package:monbudget/domain/services/budget_calculator.dart';
 import 'package:monbudget/presentation/bloc/expense_event.dart';
 import 'package:monbudget/presentation/bloc/expense_state.dart';
 import 'package:uuid/uuid.dart';
@@ -12,7 +14,20 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc(this.repository) : super(ExpenseState(expenses: [], total: 0)) {
     on<LoadExpenseEvent>((event, emit) {
       final expenses = repository.getAllExpenses();
-      emit(ExpenseState(expenses: expenses, total: repository.getTotal()));
+      final totals = repository.getTotalsByCategory();
+      final total = repository.getTotal();
+      final budgetStatus = BudgetCalculator.calculateBudgetStatus(
+        expenses,
+        total,
+      );
+      emit(
+        ExpenseState(
+          expenses: expenses,
+          total: total,
+          totalsByCategory: totals,
+          budgetStatus: budgetStatus,
+        ),
+      );
     });
 
     on<AddExpenseEvent>((event, emit) {
@@ -25,13 +40,39 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       );
       repository.addExpense(expense);
       final expenses = repository.getAllExpenses();
-      emit(ExpenseState(expenses: expenses, total: repository.getTotal()));
+      final totals = repository.getTotalsByCategory();
+      final total = repository.getTotal();
+      final budgetStatus = BudgetCalculator.calculateBudgetStatus(
+        expenses,
+        total,
+      );
+      emit(
+        ExpenseState(
+          expenses: expenses,
+          total: total,
+          totalsByCategory: totals,
+          budgetStatus: budgetStatus,
+        ),
+      );
     });
 
     on<DeleteExpenseEvent>((event, emit) {
       repository.deleteExpense(event.index);
       final expenses = repository.getAllExpenses();
-      emit(ExpenseState(expenses: expenses, total: repository.getTotal()));
+      final totals = repository.getTotalsByCategory();
+      final total = repository.getTotal();
+      final budgetStatus = BudgetCalculator.calculateBudgetStatus(
+        expenses,
+        total,
+      );
+      emit(
+        ExpenseState(
+          expenses: expenses,
+          total: total,
+          totalsByCategory: totals,
+          budgetStatus: budgetStatus,
+        ),
+      );
     });
 
     on<LoadAnalyticsEvent>((event, emit) {
@@ -41,13 +82,18 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
         start: event.start,
         end: event.end,
       );
+      final budgetStatus = BudgetCalculator.calculateBudgetStatus(
+        expenses,
+        total,
+      );
       emit(
         ExpenseState(
           expenses: expenses,
           total: total,
           totalsByCategory: totalsByCategory,
           periodLabel:
-              "${event.start.toIso8601String()} - ${event.end.toIso8601String()}",
+              "${event.start.toIso8601String().split('T').first} - ${event.end.toIso8601String().split('T').first}",
+          budgetStatus: budgetStatus,
         ),
       );
     });

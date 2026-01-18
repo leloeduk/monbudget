@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monbudget/presentation/pages/home_page.dart';
+import 'package:monbudget/presentation/pages/main_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
       Duration(seconds: 3),
       () => Navigator.of(
         context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => HomePage())),
+      ).pushReplacement(MaterialPageRoute(builder: (context) => MainPage())),
     );
     super.initState();
   }
